@@ -271,7 +271,7 @@ async def on_member_join(member):
 # ============= КОМАНДЫ =============
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def setup_app(ctx):
     embed = discord.Embed(title="🔧 Настройка", color=0x00ff00)
     embed.add_field(name="!set_channel #канал", value="Канал для заявок", inline=False)
@@ -290,48 +290,48 @@ async def ping(ctx):
     await ctx.send("🏓 Понг!")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def set_channel(ctx, channel: discord.TextChannel):
     app_system.get_guild_config(ctx.guild.id)['application_channel'] = channel.id
     app_system.save_config()
     await ctx.send(f"✅ Канал: {channel.mention}")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def set_log(ctx, channel: discord.TextChannel):
     app_system.get_guild_config(ctx.guild.id)['log_channel'] = channel.id
     app_system.save_config()
     await ctx.send(f"✅ Логи: {channel.mention}")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def set_role(ctx, role: discord.Role):
     app_system.get_guild_config(ctx.guild.id)['approved_role'] = role.id
     app_system.save_config()
     await ctx.send(f"✅ Роль: {role.mention}")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def autorole(ctx, role: discord.Role):
     app_system.get_guild_config(ctx.guild.id)['join_role'] = role.id
     app_system.save_config()
     await ctx.send(f"✅ Роль при входе: {role.mention}")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def set_welcome(ctx, *, text):
     app_system.get_guild_config(ctx.guild.id)['welcome_message'] = text
     app_system.save_config()
     await ctx.send(f"✅ Приветствие: {text}")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def add_question(ctx, *, text):
     q = app_system.add_question(ctx.guild.id, text)
     await ctx.send(f"✅ Вопрос #{q['id']} добавлен")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def list_questions(ctx):
     questions = app_system.get_guild_config(ctx.guild.id)['questions']
     if not questions:
@@ -341,13 +341,13 @@ async def list_questions(ctx):
     await ctx.send(f"**Вопросы:**\n{text}")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def remove_question(ctx, qid: int):
     app_system.remove_question(ctx.guild.id, qid)
     await ctx.send(f"✅ Вопрос {qid} удален")
 
 @bot.command()
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(manage_guild=True)
 async def post_app(ctx):
     embed = discord.Embed(
         title="📝 Вступление на сервер",
