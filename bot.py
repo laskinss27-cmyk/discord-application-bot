@@ -4,6 +4,8 @@ from discord.ui import View, Button
 import json
 import os
 from datetime import datetime
+from flask import Flask
+from threading import Thread
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -354,5 +356,24 @@ async def post_app(ctx):
     )
     await ctx.send(embed=embed, view=ApplicationView())
 
-# ============= ЗАПУСК =============
+# ============= KEEP-ALIVE (чтобы бот не засыпал) =============
+
+flask_app = Flask('')
+
+@flask_app.route('/')
+def home():
+    return "Bot is running!"
+
+def run_flask():
+    flask_app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run_flask)
+    t.daemon = True
+    t.start()
+
+# Запускаем keep-alive
+keep_alive()
+
+# ============= ЗАПУСК БОТА =============
 bot.run(os.environ['TOKEN'])

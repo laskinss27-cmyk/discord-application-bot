@@ -1,2 +1,3 @@
 #!/bin/bash
-python bot.py
+echo "Starting Discord bot..."
+exec python3 bot.py
